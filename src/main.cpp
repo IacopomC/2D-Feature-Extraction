@@ -100,7 +100,8 @@ int main(int argc, const char *argv[])
 
         //// EOF STUDENT ASSIGNMENT
 
-        // optional : limit number of keypoints (helpful for debugging and learning)
+        // DO NOT switch on in the running version
+        // limit number of keypoints (helpful for visualization and debugging purposes)
         bool bLimitKpts = false;
         if (bLimitKpts)
         {
