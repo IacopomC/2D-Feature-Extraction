@@ -73,7 +73,7 @@ int main(int argc, const char *argv[])
         vector<cv::KeyPoint> keypoints; // create empty feature list for current image
         string detectorType = "SHITOMASI"; // HARRIS, SHITOMASI, FAST, BRISK, ORB, AKAZE, SIFT, FREAK
 
-        detKeypointsModern(keypoints, imgGray, detectorType, false);
+        detectKeypoints(keypoints, imgGray, detectorType, false);
 
         // only keep keypoints on the preceding vehicle
         bool bFocusOnVehicle = true;
