@@ -71,7 +71,7 @@ int main(int argc, const char *argv[])
 
         // extract 2D keypoints from current image
         vector<cv::KeyPoint> keypoints; // create empty feature list for current image
-        string detectorType = "SHITOMASI"; // HARRIS, SHITOMASI, FAST, BRISK, ORB, AKAZE, SIFT, FREAK
+        string detectorType = "HARRIS"; // HARRIS, SHITOMASI, FAST, BRISK, ORB, AKAZE, SIFT, FREAK
 
         detectKeypoints(keypoints, imgGray, detectorType, false);
 
@@ -158,7 +158,6 @@ int main(int argc, const char *argv[])
                 cout << "Press key to continue to next image" << endl;
                 cv::waitKey(0); // wait for key to be pressed
             }
-            bVis = false;
         }
 
     } // eof loop over all images

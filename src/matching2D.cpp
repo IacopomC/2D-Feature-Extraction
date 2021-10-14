@@ -132,8 +132,43 @@ void detKeypointsHarris(std::vector<cv::KeyPoint> &keypoints, cv::Mat &img)
     cv::normalize( dst, dst_norm, 0, 255, cv::NORM_MINMAX, CV_32FC1, cv::Mat() );
     cv::convertScaleAbs( dst_norm, dst_norm_scaled );
 
-    // perform non-maxima suppression to locate corners
+    // perform non-maximum suppression to locate corners
+    double maxOverlap = 0.0; // max. permissible overlap between two features in %
+    for (int i = 0; i < dst_norm.rows; ++i)
+    {
+        for (int j = 0; j < dst_norm.cols; ++j)
+        {
+            int response = (int)dst_norm.at<float>(i,j);
+            if (response > minResponse)
+            {
+                cv::KeyPoint newKeypoint;
+                newKeypoint.pt = cv::Point2f(j, i);
+                newKeypoint.size = 2 * apertureSize;
+                newKeypoint.response = response;
 
+                // perform a non-maximum suppression (NMS) in a local neighborhood around each maximum
+                bool overlapped = false;
+                for (auto it = keypoints.begin(); it != keypoints.end(); ++it)
+                {
+                    double overlap = cv::KeyPoint::overlap(newKeypoint, *it);
+                    if (overlap > maxOverlap)
+                    {
+                        overlapped = true;
+                        if (newKeypoint.response > (*it).response)
+                        {
+                            *it = newKeypoint;
+                            break;
+                        }
+                    }
+                }
+
+                if (!overlapped)
+                {
+                    keypoints.push_back(newKeypoint);
+                }
+            }
+        }
+    }
 
     t = ((double)cv::getTickCount() - t) / cv::getTickFrequency();
     cout << "Harris detection with n=" << keypoints.size() << " keypoints in " << 1000 * t / 1.0 << " ms" << endl;
@@ -149,7 +184,7 @@ void detectKeypoints(vector<cv::KeyPoint> &keypoints, cv::Mat &img, string detec
     }
     else if (detectorType.compare("HARRIS") == 0)
     {
-        //...
+        detKeypointsHarris(keypoints, img);
     }
     else if (detectorType.compare("BRISK") == 0)
     {
