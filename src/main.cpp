@@ -75,18 +75,22 @@ int main(int argc, const char *argv[])
 
         detKeypointsModern(keypoints, imgGray, detectorType, false);
 
-        //// STUDENT ASSIGNMENT
-        //// TASK MP.3 -> only keep keypoints on the preceding vehicle
-
         // only keep keypoints on the preceding vehicle
         bool bFocusOnVehicle = true;
         cv::Rect vehicleRect(535, 180, 180, 150);
         if (bFocusOnVehicle)
         {
-            // ...
+            vector<cv::KeyPoint> vechileKP;
+            for (auto it = keypoints.begin(); it != keypoints.end(); ++it)
+            {
+                // keypoint outside of bounding box, so erase it
+                if (vehicleRect.contains(it->pt))
+                {
+                    vechileKP.push_back(*it);
+                }
+            }
+            keypoints = vechileKP;
         }
-
-        //// EOF STUDENT ASSIGNMENT
 
         // DO NOT switch on in the running version
         // limit number of keypoints (helpful for visualization and debugging purposes)
