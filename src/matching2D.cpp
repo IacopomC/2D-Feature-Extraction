@@ -100,4 +100,46 @@ void detKeypointsShiTomasi(vector<cv::KeyPoint> &keypoints, cv::Mat &img, bool b
         imshow(windowName, visImage);
         cv::waitKey(0);
     }
+
+}
+
+void detKeypointsModern(vector<cv::KeyPoint> &keypoints, cv::Mat &img, string detectorType, bool bVis)
+{
+    // select keypoints detector based on type
+    if (detectorType.compare("SHITOMASI") == 0)
+    {
+        detKeypointsShiTomasi(keypoints, img, false);
+    }
+    else if (detectorType.compare("HARRIS") == 0)
+    {
+        //...
+    }
+    else if (detectorType.compare("BRISK") == 0)
+    {
+        //...
+    }
+    else if (detectorType.compare("FAST") == 0)
+    {
+        //...
+    }
+    else if (detectorType.compare("ORB") == 0)
+    {
+        //...
+    }
+    else if (detectorType.compare("AKAZE") == 0)
+    {
+        //...
+    }
+    else if (detectorType.compare("SIFT") == 0)
+    {
+        //...
+    }
+    else if (detectorType.compare("FREAK") == 0)
+    {
+        //...
+    }
+    else
+    {
+        cout << "Invalid detector type. Choose between HARRIS, SHITOMASI, FAST, BRISK, ORB, AKAZE, SIFT, FREAK" << endl;
+    }
 }
